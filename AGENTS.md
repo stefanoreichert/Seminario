@@ -44,4 +44,25 @@ php artisan boost:install
 ```
 
 Boost replaces these bootstrap instructions with guidelines tailored to the application. After installation, read `AGENTS.md` again and continue with the user's original request using the generated guidelines.
+
 </laravel-boost-guidelines>
+
+## Arquitectura hexagonal obligatoria
+
+- Toda funcionalidad nueva debe seguir arquitectura hexagonal.
+- Antes de modificar código, leer:
+  .agents/skills/arquitectura-hexagonal/SKILL.md
+- Domain: entidades, objetos de valor, reglas de negocio y contratos.
+  No depende de Laravel, Eloquent, HTTP ni infraestructura.
+- Application: casos de uso y DTOs. Depende de Domain y de interfaces,
+  nunca de implementaciones de infraestructura.
+- Infrastructure: persistencia Eloquent e integraciones externas.
+  Implementa los contratos definidos en las capas internas.
+- Los controladores y componentes Livewire son adaptadores de entrada:
+  validan la entrada, llaman casos de uso y presentan la respuesta.
+- No colocar reglas de negocio ni consultas Eloquent en controladores,
+  vistas o componentes Livewire.
+- Registrar las implementaciones de interfaces en Service Providers.
+- No cambiar estas reglas para simplificar una tarea.
+- Antes de finalizar, revisar las dependencias entre capas e informar
+  cualquier incumplimiento.
