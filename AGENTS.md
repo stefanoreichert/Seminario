@@ -64,9 +64,10 @@ Proyecto académico de Reichert y Karpe: sistema de gestión mayorista de calzad
 Antes de implementar, modificar o refactorizar funcionalidad:
 
 1. Leer esta guía y `.agents/skills/flujo-codex/SKILL.md`.
-2. Revisar los nombres y descripciones en `.agents/skills/` y leer el `SKILL.md` de cada skill relevante para la tarea.
-3. Usar siempre `arquitectura-hexagonal`; sumar las skills de dominio, adaptadores Laravel, pedidos, inventario, clientes/cobranzas, trazabilidad y calidad según el cambio.
-4. Aplicar los requisitos funcionales, no funcionales, reglas de negocio y límites documentados; describir conflictos y decisiones pendientes.
+2. Consultar `docs/README.md` como índice; revisar los documentos originales disponibles en `docs/` y confirmar sus versiones. Si faltan, declararlo y no presentar el resumen del índice o las skills como fuente académica verificada.
+3. Revisar los nombres y descripciones en `.agents/skills/` y leer el `SKILL.md` de cada skill relevante para la tarea.
+4. Usar siempre `arquitectura-hexagonal`; sumar las skills de dominio, adaptadores Laravel, pedidos, inventario, clientes/cobranzas, trazabilidad y calidad según el cambio.
+5. Aplicar los requisitos funcionales, no funcionales, reglas de negocio y límites documentados; describir conflictos y decisiones pendientes.
 
 ## Arquitectura hexagonal obligatoria
 
