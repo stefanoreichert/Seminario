@@ -47,22 +47,36 @@ Boost replaces these bootstrap instructions with guidelines tailored to the appl
 
 </laravel-boost-guidelines>
 
+## Proyecto SIMON SRL
+
+Proyecto académico de Reichert y Karpe: sistema de gestión mayorista de calzado de seguridad.
+
+- Tratar como contextos funcionales documentados Clientes, Catálogo, Pedidos, Inventario de producto terminado, Preparación/Despachos, Trazabilidad, Cuentas corrientes, Devoluciones y Reportes; confirmar el alcance antes de ampliar funcionalidades.
+- Priorizar el TP Análisis para el alcance conservador y contrastar el Trabajo Práctico Final Seminario antes de extender funcionalidades.
+- No asumir tecnologías, estructura ni reglas no confirmadas: inspeccionar el repositorio y la documentación disponible.
+- Ante documentos contradictorios, informar la diferencia y no convertir una suposición en código. Detener solo la decisión afectada si el resto del trabajo no depende de ella.
+- Fuentes de referencia indicadas: TP Análisis, Trabajo Práctico Final Seminario, DER, modelo relacional y carpeta Drive del proyecto. URL documentada: https://drive.google.com/drive/folders/1a8ddBrhigHQCwP6oIqDIohcwWSkECmAD. Verificar la versión vigente y no afirmar consultas no realizadas.
+- Contradicciones ya identificadas: alcance de facturación fiscal, código de origen de Gustavo (G/N) y picking individual por QR.
+- Probar reglas de negocio, permisos y casos de uso antes de afirmar que funcionan.
+
+## Uso obligatorio de skills por Codex
+
+Antes de implementar, modificar o refactorizar funcionalidad:
+
+1. Leer esta guía y `.agents/skills/flujo-codex/SKILL.md`.
+2. Consultar `docs/README.md` como índice; revisar los documentos originales disponibles en `docs/` y confirmar sus versiones. Si faltan, declararlo y no presentar el resumen del índice o las skills como fuente académica verificada.
+3. Revisar los nombres y descripciones en `.agents/skills/` y leer el `SKILL.md` de cada skill relevante para la tarea.
+4. Usar siempre `arquitectura-hexagonal`; sumar las skills de dominio, adaptadores Laravel, pedidos, inventario, clientes/cobranzas, trazabilidad y calidad según el cambio.
+5. Aplicar los requisitos funcionales, no funcionales, reglas de negocio y límites documentados; describir conflictos y decisiones pendientes.
+
 ## Arquitectura hexagonal obligatoria
 
-- Toda funcionalidad nueva debe seguir arquitectura hexagonal.
-- Antes de modificar código, leer:
-  .agents/skills/arquitectura-hexagonal/SKILL.md
-- Domain: entidades, objetos de valor, reglas de negocio y contratos.
-  No depende de Laravel, Eloquent, HTTP ni infraestructura.
-- Application: casos de uso y DTOs. Depende de Domain y de interfaces,
-  nunca de implementaciones de infraestructura.
-- Infrastructure: persistencia Eloquent e integraciones externas.
-  Implementa los contratos definidos en las capas internas.
-- Los controladores y componentes Livewire son adaptadores de entrada:
-  validan la entrada, llaman casos de uso y presentan la respuesta.
-- No colocar reglas de negocio ni consultas Eloquent en controladores,
-  vistas o componentes Livewire.
-- Registrar las implementaciones de interfaces en Service Providers.
-- No cambiar estas reglas para simplificar una tarea.
-- Antes de finalizar, revisar las dependencias entre capas e informar
-  cualquier incumplimiento.
+- Toda funcionalidad nueva o modificada debe respetar Ports & Adapters. No cambiar la arquitectura existente sin ADR y aprobación explícita.
+- **Domain**: entidades, objetos de valor, invariantes, reglas y servicios puros. No depende de Laravel, Eloquent, HTTP, SQL ni infraestructura.
+- **Application**: casos de uso, comandos/DTOs y puertos requeridos por esos casos de uso. Depende del dominio y de abstracciones internas, nunca de implementaciones de infraestructura.
+- **Infrastructure**: adaptadores de persistencia (incluido Eloquent) e integraciones externas que implementan los puertos internos.
+- **Presentation**: controladores, componentes Livewire y otros adaptadores de entrada que validan/traducen solicitudes, llaman casos de uso y presentan respuestas.
+- Las dependencias apuntan hacia adentro. Resolver implementaciones mediante inyección y Service Providers.
+- Prohibido colocar lógica de negocio en controladores, vistas, componentes Livewire o modelos Eloquent; mantener HTTP y Eloquent fuera de Domain y Application.
+- Usar `app/Modules/<Modulo>/{Domain,Application,Infrastructure}` cuando corresponda; mantener adaptadores HTTP en `app/Http/` y seguir la estructura Laravel existente. No imponer reorganizaciones globales ni crear carpetas vacías.
+- Antes de finalizar, comprobar los límites entre capas y reportar cualquier incumplimiento inevitable.
